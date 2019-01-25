@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Bhagavad Gita</string>
 
     <!-- add custom strings before this line -->
@@ -13,7 +13,7 @@
     <string name="chapter_12_title">The Yoga of Devotion</string>
     <string name="chapter_13_name">Chapter 13 - Ksetra Ksetrajna Vibhaaga Yoga</string>
     <string name="chapter_13_summary">The thirteenth chapter of the Bhagavad Gita is Ksetra Ksetrajna Vibhaaga Yoga. The word kshetra means the field, and the kshetrajna means the knower of the field. We can think of our material body as the field and our immortal soul as the knower of the field. In this chapter, Krishna discriminates between the physical body and the immortal soul. He explains that the physical body is temporary and perishable whereas the soul is permanent and eternal. The physical body can be destroyed but the soul can never be destroyed. The chapter then describes God, who is the Supreme Soul. All the individual souls have originated from the Supreme Soul. One who clearly understands the difference between the body, the Soul and the Supreme Soul attains the realization of Brahman.</string>
-    <string name="chapter_13_title">Yoga through Distinguishing the Field and the Knower of the Field</string>
+    <string name="chapter_13_title" tools:ignore="Typos">Yoga yo yo through Distinguishing the Field and the Knower of the Field</string>
     <string name="chapter_14_name">Chapter 14 - Gunatraya Vibhaga Yoga</string>
     <string name="chapter_14_summary">The fourteenth chapter of the Bhagavad Gita is Gunatraya Vibhaga Yoga. In this chapter, Krishna reveals the three gunas (modes) of the material nature - goodness, passion and ignorance which everything in the material existence is influenced by. He further explains the essential characteristics of each of these modes, their cause and how they influence a living entity affected by them. He then reveals the various characteristics of the persons who have gone beyond these gunas. The chapter ends with Krishna reminding us of the power of pure devotion to God and how attachment to God can help us transcend these gunas.</string>
     <string name="chapter_14_title">Yoga through Understanding the Three Modes of Material Nature</string>
