@@ -3,4 +3,5 @@
     <dimen name="chapter_title_size">30px</dimen>
     <dimen name="chapter_space_between_number_and_title">5px</dimen>
     <dimen name="list_item_padding">5px</dimen>
+    <dimen name="verse_text_size">20px</dimen>
 </resources>

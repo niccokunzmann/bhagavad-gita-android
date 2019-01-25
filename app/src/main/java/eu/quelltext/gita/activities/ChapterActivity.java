@@ -10,41 +10,45 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import eu.quelltext.gita.model.Chapter;
 
 import eu.quelltext.gita.R;
+import eu.quelltext.gita.model.Chapter;
 
-public class ChooseChaptersActivity extends Activity {
+public class ChapterActivity extends Activity {
 
-    private ListView chaptersList;
+    public static final String CHAPTER_INDEX = "chapter_index";
+    private ListView versesList;
+    private Chapter chapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_chapters);
+        setContentView(R.layout.activity_chapter);
+
+        chapter = new Chapter(this, getIntent().getIntExtra(CHAPTER_INDEX, 0));
+
         // ListView inspired by http://www.vogella.com/tutorials/AndroidListView/article.html
-        chaptersList = (ListView) findViewById(R.id.chapters_list);
-        final ArrayAdapter<Chapter> adapter = new ArrayAdapter<Chapter>(this, -1, Chapter.all(this)) {
+        versesList = (ListView) findViewById(R.id.verses_list);
+        final ArrayAdapter<Chapter.Verse> adapter = new ArrayAdapter<Chapter.Verse>(this, -1, chapter.allVerses()) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                Chapter chapter = getItem(position);
-                LayoutInflater inflater = (LayoutInflater) ChooseChaptersActivity.this
+                Chapter.Verse verse = getItem(position);
+                LayoutInflater inflater = (LayoutInflater) ChapterActivity.this
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View chapterView = inflater.inflate(R.layout.chapter_list_element, parent, false);
                 TextView indexText = chapterView.findViewById(R.id.text_index);
-                TextView titleText = chapterView.findViewById(R.id.text_title);
-                indexText.setText(Integer.toString(chapter.getIndex()));
-                titleText.setText(chapter.getTitle());
+                TextView contentText = chapterView.findViewById(R.id.text_title);
+                indexText.setText(verse.getIndexString());
+                contentText.setText(verse.getText());
                 return chapterView;
             }
         };
-        chaptersList.setAdapter(adapter);
-        chaptersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        versesList.setAdapter(adapter);
+        versesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Chapter chapter = (Chapter)chaptersList.getItemAtPosition(i);
-                System.out.println("Clicked Chapter: " + chapter.getTitle());
-                chapter.openAsActivity(ChooseChaptersActivity.this);
+                Chapter.Verse chapter = (Chapter.Verse)versesList.getItemAtPosition(i);
+                System.out.println("Clicked Verse: " + chapter.getIndexString());
             }
         });
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/list_item_padding">
+
+    <TextView
+        android:id="@+id/text_verse_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/chapter_space_between_number_and_title"
+        android:text="1"
+        android:textSize="@dimen/verse_text_size" />
+
+    <TextView
+        android:id="@+id/text_verse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/chapter_1_verse_1_meaning"
+        android:textSize="@dimen/verse_text_size" />
+</LinearLayout>

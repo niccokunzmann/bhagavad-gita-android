@@ -1,10 +1,13 @@
 package eu.quelltext.gita.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.quelltext.gita.activities.ChapterActivity;
 
 public class Chapter {
     private final int index;
@@ -30,6 +33,7 @@ public class Chapter {
         this.title = getStringResourceByName("chapter_" + index + "_title");
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -45,4 +49,24 @@ public class Chapter {
         return context.getString(resId);
     }
 
+    public void openAsActivity(Context context) {
+        Intent myIntent = new Intent(context, ChapterActivity.class);
+        myIntent.putExtra(ChapterActivity.CHAPTER_INDEX, this.getIndex()); //Optional parameters
+        context.startActivity(myIntent);
+    }
+
+    public List<Verse> allVerses() {
+        return new ArrayList<>();
+    }
+
+    public class Verse {
+
+        public String getIndexString() {
+            return "1";
+        }
+
+        public String getText() {
+            return "test text";
+        }
+    }
 }
