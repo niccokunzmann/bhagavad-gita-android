@@ -27,8 +27,13 @@ do
   else
     translatable="" # true is default
   fi
+  if echo "$id" | grep -qE "sanskrit|transliteration"; then
+    typos=" tools:ignore=\"Typos\""
+  else
+    typos="" # normally do not ignore typos
+  fi
   content_id="<string name=\"$id\""
-  line="    $content_id$translatable>`cat \"$file\"`</string>"
+  line="    $content_id$translatable$typos>`cat \"$file\"`</string>"
   remove_lines="$remove_lines
 $content_id"
   add="$add
