@@ -22,7 +22,7 @@ max_i="`ls \"$ids_folder\" | wc -l`"
 for file in "$ids_folder/"*
 do
   id="`basename \"$file\"`"
-  if echo "$id" | grep -q "sanskrit"; then
+  if echo "$id" | grep -q "sanskrit|transliteration"; then
     translatable=" translatable=\"false\""
   else
     translatable="" # true is default
@@ -33,7 +33,11 @@ do
     typos="" # normally do not ignore typos
   fi
   content_id="<string name=\"$id\""
-  line="    $content_id$translatable$typos>`cat \"$file\"`</string>"
+  content="`cat \"$file\"`"
+  # Transform the content from html to XML
+  # see https://stackoverflow.com/a/5966570
+  content="`echo \"$content\" | sed \"s/&#39;/\\\\\'/g\"`"
+  line="    $content_id$translatable$typos>$content</string>"
   remove_lines="$remove_lines
 $content_id"
   add="$add
