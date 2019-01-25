@@ -1,10 +1,8 @@
-package eu.quelltext.gita;
+package eu.quelltext.gita.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.health.SystemHealthManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import eu.quelltext.gita.model.Chapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import eu.quelltext.gita.R;
 
 public class ChooseChaptersActivity extends Activity {
 
@@ -27,7 +24,7 @@ public class ChooseChaptersActivity extends Activity {
         setContentView(R.layout.activity_choose_chapters);
         // ListView inspired by http://www.vogella.com/tutorials/AndroidListView/article.html
         chaptersList = (ListView) findViewById(R.id.chapters_list);
-        final ArrayAdapter<Chapter> adapter = new ArrayAdapter<Chapter>(this, -1, getChapters()) {
+        final ArrayAdapter<Chapter> adapter = new ArrayAdapter<Chapter>(this, -1, Chapter.all(this)) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 Chapter chapter = getItem(position);
@@ -50,43 +47,5 @@ public class ChooseChaptersActivity extends Activity {
                 System.out.println("Clicked: " + chapter.getTitle());
             }
         });
-    }
-
-    private List<Chapter> getChapters() {
-        List chapters = new ArrayList();
-        for (int i = 1; true; i++) {
-            try {
-                Chapter chapter = new Chapter(i);
-                chapters.add(chapter);
-            } catch (Resources.NotFoundException e) {
-                break;
-            }
-        }
-        return chapters;
-    }
-
-    private String getStringResourceByName(String aString) {
-        // from https://stackoverflow.com/a/11595723
-        String packageName = getPackageName();
-        int resId = getResources().getIdentifier(aString, "string", packageName);
-        return getString(resId);
-    }
-
-    class Chapter {
-        private final int index;
-        private final String title;
-
-        Chapter (int index) {
-            this.index = index;
-            this.title = getStringResourceByName("chapter_" + index + "_title");
-        }
-
-        String getTitle() {
-            return title;
-        }
-
-        public int getIndex() {
-            return index;
-        }
     }
 }
