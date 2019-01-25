@@ -35,9 +35,9 @@ public class ChapterActivity extends Activity {
                 Chapter.Verse verse = getItem(position);
                 LayoutInflater inflater = (LayoutInflater) ChapterActivity.this
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View chapterView = inflater.inflate(R.layout.chapter_list_element, parent, false);
-                TextView indexText = chapterView.findViewById(R.id.text_index);
-                TextView contentText = chapterView.findViewById(R.id.text_title);
+                View chapterView = inflater.inflate(R.layout.verse_list_element, parent, false);
+                TextView indexText = chapterView.findViewById(R.id.text_verse_number);
+                TextView contentText = chapterView.findViewById(R.id.text_verse);
                 indexText.setText(verse.getIndexString());
                 contentText.setText(verse.getText());
                 return chapterView;

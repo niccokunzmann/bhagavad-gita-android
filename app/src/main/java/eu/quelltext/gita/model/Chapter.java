@@ -56,17 +56,65 @@ public class Chapter {
     }
 
     public List<Verse> allVerses() {
-        return new ArrayList<>();
+        ArrayList<Verse> verses = new ArrayList<Verse>();
+        for (int start = 1; true; start++) {
+            boolean aVerseWasAdded = false;
+            for (int stop = start; stop < start + Verse.MAX_NUMBER_OF_UNITED_VERSES; stop++) {
+                try {
+                    Verse verse = new Verse(start, stop);
+                    verses.add(verse);
+                    aVerseWasAdded = true;
+                    break;
+                } catch (Resources.NotFoundException e) {
+                    continue;
+                }
+            }
+            if (!aVerseWasAdded) {
+                break;
+            }
+        }
+        return verses;
     }
 
     public class Verse {
 
+        public static final int MAX_NUMBER_OF_UNITED_VERSES = 10;
+        private final int start;
+        private final int stop;
+        private final String text;
+
+        private Verse(int start, int stop) {
+            this.start = start;
+            this.stop = stop;
+            this.text = getTextAttribute("meaning");
+        }
+
+        public boolean hasMultipleVerses() {
+            return start != stop;
+        }
+
         public String getIndexString() {
-            return "1";
+            return hasMultipleVerses() ? Integer.toString(start) + "-" + Integer.toString(stop) : Integer.toString(start);
         }
 
         public String getText() {
-            return "test text";
+            return text;
+        }
+
+        private String getTextAttribute(String attribute) {
+            String verseId = hasMultipleVerses() ? Integer.toString(start) + "_" + Integer.toString(stop) : Integer.toString(start);
+            return getStringResourceByName(
+                    "chapter_" + Integer.toString(Chapter.this.getIndex()) +
+                            "_verse_" + verseId +
+                            "_" + attribute);
+        }
+
+        public String getSanskrit() {
+            return getTextAttribute("sanskrit");
+        }
+
+        public String getTransliteration() {
+            return getTextAttribute("transliteration");
         }
     }
 }
