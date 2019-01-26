@@ -59,7 +59,8 @@ public class Chapter {
         ArrayList<Verse> verses = new ArrayList<Verse>();
         for (int start = 1; true; start++) {
             boolean aVerseWasAdded = false;
-            for (int stop = start; stop < start + Verse.MAX_NUMBER_OF_UNITED_VERSES; stop++) {
+            int stop;
+            for (stop = start; stop < start + Verse.MAX_NUMBER_OF_UNITED_VERSES; stop++) {
                 try {
                     Verse verse = new Verse(start, stop);
                     verses.add(verse);
@@ -69,6 +70,7 @@ public class Chapter {
                     continue;
                 }
             }
+            start = stop;
             if (!aVerseWasAdded) {
                 break;
             }
