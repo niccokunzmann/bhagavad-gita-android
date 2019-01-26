@@ -1,5 +1,6 @@
 package eu.quelltext.gita.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,16 +24,21 @@ public class ChooseChaptersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_chapters);
         // ListView inspired by http://www.vogella.com/tutorials/AndroidListView/article.html
-        chaptersList = (ListView) findViewById(R.id.chapters_list);
+        chaptersList = findViewById(R.id.chapters_list);
         final ArrayAdapter<Chapter> adapter = new ArrayAdapter<Chapter>(this, -1, Chapter.all(this)) {
+            @SuppressLint("SetTextI18n")
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View chapterView, ViewGroup parent) {
                 Chapter chapter = getItem(position);
-                LayoutInflater inflater = (LayoutInflater) ChooseChaptersActivity.this
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View chapterView = inflater.inflate(R.layout.chapter_list_element, parent, false);
+                if (chapterView == null) {
+                    LayoutInflater inflater = (LayoutInflater) ChooseChaptersActivity.this
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    assert inflater != null;
+                    chapterView = inflater.inflate(R.layout.chapter_list_element, parent, false);
+                }
                 TextView indexText = chapterView.findViewById(R.id.text_index);
                 TextView titleText = chapterView.findViewById(R.id.text_title);
+                assert chapter != null;
                 indexText.setText(Integer.toString(chapter.getIndex()));
                 titleText.setText(chapter.getTitle());
                 return chapterView;

@@ -15,7 +15,7 @@ public class Chapter {
     private final Context context;
 
     public static List<Chapter> all(Context context) {
-        List chapters = new ArrayList();
+        List<Chapter> chapters = new ArrayList<>();
         for (int i = 1; true; i++) {
             try {
                 Chapter chapter = new Chapter(context, i);
@@ -56,19 +56,20 @@ public class Chapter {
     }
 
     public List<Verse> allVerses() {
-        ArrayList<Verse> verses = new ArrayList<Verse>();
+        ArrayList<Verse> verses = new ArrayList<>();
         for (int start = 1; true; start++) {
             boolean aVerseWasAdded = false;
             int stop;
             for (stop = start; stop < start + Verse.MAX_NUMBER_OF_UNITED_VERSES; stop++) {
+                Verse verse;
                 try {
-                    Verse verse = new Verse(start, stop);
-                    verses.add(verse);
-                    aVerseWasAdded = true;
-                    break;
+                    verse = new Verse(start, stop);
                 } catch (Resources.NotFoundException e) {
                     continue;
                 }
+                verses.add(verse);
+                aVerseWasAdded = true;
+                break;
             }
             start = stop;
             if (!aVerseWasAdded) {
@@ -80,7 +81,7 @@ public class Chapter {
 
     public class Verse {
 
-        public static final int MAX_NUMBER_OF_UNITED_VERSES = 10;
+        static final int MAX_NUMBER_OF_UNITED_VERSES = 10;
         private final int start;
         private final int stop;
         private final String text;
@@ -88,10 +89,10 @@ public class Chapter {
         private Verse(int start, int stop) {
             this.start = start;
             this.stop = stop;
-            this.text = getTextAttribute("meaning");
+            this.text = getMeaning();
         }
 
-        public boolean hasMultipleVerses() {
+        boolean hasMultipleVerses() {
             return start != stop;
         }
 
@@ -103,20 +104,12 @@ public class Chapter {
             return text;
         }
 
-        private String getTextAttribute(String attribute) {
+        private String getMeaning() {
             String verseId = hasMultipleVerses() ? Integer.toString(start) + "_" + Integer.toString(stop) : Integer.toString(start);
             return getStringResourceByName(
                     "chapter_" + Integer.toString(Chapter.this.getIndex()) +
                             "_verse_" + verseId +
-                            "_" + attribute);
-        }
-
-        public String getSanskrit() {
-            return getTextAttribute("sanskrit");
-        }
-
-        public String getTransliteration() {
-            return getTextAttribute("transliteration");
+                            "_meaning");
         }
     }
 }

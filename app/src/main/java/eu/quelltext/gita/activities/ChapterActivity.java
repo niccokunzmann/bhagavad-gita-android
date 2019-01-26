@@ -18,29 +18,32 @@ public class ChapterActivity extends Activity {
 
     public static final String CHAPTER_INDEX = "chapter_index";
     private ListView versesList;
-    private Chapter chapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter);
 
-        chapter = new Chapter(this, getIntent().getIntExtra(CHAPTER_INDEX, 0));
+        final Chapter chapter = new Chapter(this, getIntent().getIntExtra(CHAPTER_INDEX, 0));
 
         // ListView inspired by http://www.vogella.com/tutorials/AndroidListView/article.html
-        versesList = (ListView) findViewById(R.id.verses_list);
+        versesList = findViewById(R.id.verses_list);
         final ArrayAdapter<Chapter.Verse> adapter = new ArrayAdapter<Chapter.Verse>(this, -1, chapter.allVerses()) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View verseView, ViewGroup parent) {
                 Chapter.Verse verse = getItem(position);
-                LayoutInflater inflater = (LayoutInflater) ChapterActivity.this
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View chapterView = inflater.inflate(R.layout.verse_list_element, parent, false);
-                TextView indexText = chapterView.findViewById(R.id.text_verse_number);
-                TextView contentText = chapterView.findViewById(R.id.text_verse);
+                if (verseView == null) {
+                    LayoutInflater inflater = (LayoutInflater) ChapterActivity.this
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    assert inflater != null;
+                    verseView = inflater.inflate(R.layout.verse_list_element, parent, false);
+                }
+                TextView indexText = verseView.findViewById(R.id.text_verse_number);
+                TextView contentText = verseView.findViewById(R.id.text_verse);
+                assert verse != null;
                 indexText.setText(verse.getIndexString());
                 contentText.setText(verse.getText());
-                return chapterView;
+                return verseView;
             }
         };
         versesList.setAdapter(adapter);
