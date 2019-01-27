@@ -62,7 +62,8 @@ for language in "$@"; do
     content="`cat \"$file\"`"
     # Transform the content from html to XML
     # see https://stackoverflow.com/a/5966570
-    content="`echo \"$content\" | sed \"s/&#39;/\\\\\'/g\"`"
+    # Remove newlines see https://stackoverflow.com/a/19345906
+    content=`echo -n $content | sed "s/&#39;/\\'/g" | tr '\r\t\n' ' '`
     line="    $content_id$translatable$typos>$content</string>"
     remove_lines="$remove_lines
 $content_id"

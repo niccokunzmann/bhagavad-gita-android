@@ -24,7 +24,7 @@ function get_content() {
 }
 
 function verse_id() {
-  echo -n $1 | sed -r s/^0?/chapter_/ | sed -r s/-0?/_verse_/ | sed -r 's#/#_#'
+  echo -n $1 | sed -r s/^0?/chapter_/ | sed -r s/-0?/_verse_/ | sed -r 's#/[0-9]*##'
   echo -n _meaning
 }
 
