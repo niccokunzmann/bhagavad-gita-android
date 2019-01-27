@@ -16,7 +16,7 @@ import eu.quelltext.gita.model.Chapter;
 
 public class ChapterActivity extends Activity {
 
-    public static final String CHAPTER_INDEX = "chapter_index";
+    public static final String INTENT_ARGUMENT_CHAPTER_INDEX = "chapter_index";
     private ListView versesList;
 
     @Override
@@ -24,7 +24,7 @@ public class ChapterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter);
 
-        final Chapter chapter = new Chapter(this, getIntent().getIntExtra(CHAPTER_INDEX, 0));
+        final Chapter chapter = new Chapter(this, getIntent().getIntExtra(INTENT_ARGUMENT_CHAPTER_INDEX, 0));
 
         // ListView inspired by http://www.vogella.com/tutorials/AndroidListView/article.html
         versesList = findViewById(R.id.verses_list);

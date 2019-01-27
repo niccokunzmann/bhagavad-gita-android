@@ -54,7 +54,7 @@ public class Chapter {
 
     public void openAsActivity(Context context) {
         Intent myIntent = new Intent(context, ChapterActivity.class);
-        myIntent.putExtra(ChapterActivity.CHAPTER_INDEX, this.getIndex()); //Optional parameters
+        myIntent.putExtra(ChapterActivity.INTENT_ARGUMENT_CHAPTER_INDEX, this.getIndex()); //Optional parameters
         context.startActivity(myIntent);
     }
 
