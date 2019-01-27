@@ -48,7 +48,7 @@ for language in "$@"; do
   for file in "$ids_folder/"*
   do
     id="`basename \"$file\"`"
-    if echo "$id" | grep -q "sanskrit|transliteration"; then
+    if echo "$id" | grep -qE "sanskrit|transliteration"; then
       translatable=" translatable=\"false\""
     else
       translatable="" # true is default
