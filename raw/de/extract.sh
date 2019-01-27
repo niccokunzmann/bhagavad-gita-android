@@ -45,3 +45,10 @@ for page in schriften.yoga-vidya.de/*; do
   done
 done
 
+(
+  cd "$output"
+  mv chapter_13_verse_2_meaning chapter_13_verse_3_meaning
+  mv chapter_13_verse_1_meaning chapter_13_verse_2_meaning
+  mv chapter_13_verse_0_meaning chapter_13_verse_1_meaning
+)
+
