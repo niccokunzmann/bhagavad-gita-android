@@ -42,7 +42,7 @@ public class ChapterActivity extends Activity {
                 TextView contentText = verseView.findViewById(R.id.text_verse);
                 assert verse != null;
                 indexText.setText(verse.getIndexString());
-                contentText.setText(verse.getText());
+                contentText.setText(verse.getMeaning());
                 return verseView;
             }
         };
