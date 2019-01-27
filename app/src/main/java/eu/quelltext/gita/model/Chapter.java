@@ -12,22 +12,15 @@ public class Chapter {
     private final int index;
     private final Context context;
 
+    private static final int[] VERSE_COUNT = {47, 72, 43, 42, 29, 47, 30, 28, 34, 42, 55, 20, 35, 27, 20, 24, 28, 78};
+
     public static List<Chapter> all(Context context) {
         List<Chapter> chapters = new ArrayList<>();
-        for (int i = 1; true; i++) {
+        for (int i = 1; i <= 18; i++) {
             Chapter chapter = new Chapter(context, i);
-            if (chapter.exists()) {
-                chapters.add(chapter);
-            } else {
-                break;
-            }
+            chapters.add(chapter);
         }
         return chapters;
-    }
-
-    public boolean exists() {
-        return getTitle() != null;
-
     }
 
     public Chapter (Context context, int index) {
@@ -41,6 +34,10 @@ public class Chapter {
 
     public int getIndex() {
         return index;
+    }
+
+    public int getVerseCount() {
+        return VERSE_COUNT[getIndex() - 1];
     }
 
     /* Return the string or null if it does not exist.
@@ -63,34 +60,30 @@ public class Chapter {
 
     public List<Verse> allVerses() {
         ArrayList<Verse> verses = new ArrayList<>();
-        for (int start = 1; true; start++) {
-            boolean aVerseWasAdded = false;
-            int stop;
-            for (stop = start; stop < start + Verse.MAX_NUMBER_OF_UNITED_VERSES; stop++) {
-                Verse verse = new Verse(start, stop);
-                if (verse.exists()) {
-                    verses.add(verse);
-                    aVerseWasAdded = true;
-                    break;
+        int numberOfVerses = getVerseCount();
+        Verse lastVerse = null;
+        for (int index = 1; index <= numberOfVerses; index++) {
+            Verse verse = new Verse(index);
+            if (verse.exists()) {
+                if (lastVerse != null) {
+                    lastVerse.setStop(index - 1);
                 }
-            }
-            start = stop;
-            if (!aVerseWasAdded) {
-                break;
+                verses.add(verse);
+                lastVerse = verse;
             }
         }
+        lastVerse.setStop(numberOfVerses);
         return verses;
     }
 
     public class Verse {
 
-        static final int MAX_NUMBER_OF_UNITED_VERSES = 10;
         private final int start;
-        private final int stop;
+        private int stop;
 
-        private Verse(int start, int stop) {
+        private Verse(int start) {
             this.start = start;
-            this.stop = stop;
+            this.stop = start;
         }
 
         boolean hasMultipleVerses() {
@@ -102,7 +95,7 @@ public class Chapter {
         }
 
         public String getMeaning() {
-            String verseId = hasMultipleVerses() ? Integer.toString(start) + "_" + Integer.toString(stop) : Integer.toString(start);
+            String verseId = Integer.toString(start);
             return getStringResourceByName(
                     "chapter_" + Integer.toString(Chapter.this.getIndex()) +
                             "_verse_" + verseId +
@@ -110,7 +103,12 @@ public class Chapter {
         }
 
         public boolean exists() {
-            return getMeaning() != null;
+            String meaning = getMeaning();
+            return meaning != null && !meaning.equals("");
+        }
+
+        public void setStop(int stop) {
+            this.stop = stop;
         }
     }
 }

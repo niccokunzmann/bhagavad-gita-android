@@ -47,7 +47,7 @@ for chapter in bhagavadgita.io/chapter/*; do
       1>&2 echo "ERROR: Excpected file $content_file"
       exit 1
     fi
-    verse_number="`basename \"$verse\" | sed 's/-/_/g'`"
+    verse_number="`basename \"$verse\" | sed 's/-.*//g'`"
     verse_sanskrit="`get_content \"$content_file\" \"verse-sanskrit\"`"
     verse_transliteration="`get_content \"$content_file\" \"verse-transliteration\"`"
     verse_meaning="`get_content \"$content_file\" \"verse-meaning\"`"
